@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Documentation
 
-## Getting Started
+This is Documentation how to set up this project!
 
-First, run the development server:
+## Installation
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone this repository to your local machine using:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/dj1samsoe/do-it.git
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Navigate to the project directory:
+   ```bash
+   cd do-it
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Usage
 
-## Learn More
+1. Configure your settings in the .env file.
+2. Get the Google Secret key in Google Cloud Console until get this :
+   ```bash
+   GOOGLE_CLIENT_ID=
+   GOOGLE_CLIENT_SECRET=
+   ```
+   then copy the key, and paste into your .env file
+3. Add this to your .env file :
+   ```bash
+   NEXTAUTH_URL=http://localhost:3000/api/auth
+   NEXTAUTH_SECRET=your_secret_code
+   ```
+4. Connect your database using Postgresql (in my case I'm using [Aiven](https://aiven.io/))
+5. Paste your database url like this :
+   ```bash
+   DATABASE_URL="postgres://username:password@host:port/dbname"
+   ```
+6. Run the Prisma migration to set up your database schema:
+   ```bash
+    npx prisma migrate dev
+   ```
+7. Start the development server:
+   ```bash
+   npm run dev
+   ```
+8. Access the application in your browser at http://localhost:3000.
 
-To learn more about Next.js, take a look at the following resources:
+## Reference
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Design UI : [Behance](https://www.behance.net/gallery/157754015/To-Do-List-UI-Design/modules/890065645)
+2. Documentation :
+   - [Next.JS](https://nextjs.org/)
+   - [TailwindCSS](https://tailwindcss.com/docs/installation)
+   - [Shadcn-UI](https://ui.shadcn.com/)
+   - [NextAuth](https://next-auth.js.org/)
