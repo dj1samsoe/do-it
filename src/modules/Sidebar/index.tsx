@@ -3,12 +3,11 @@ import { User } from "next-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Breakline from "@/components/Breakline";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
 import { GoTasklist } from "react-icons/go";
 import { BsListTask } from "react-icons/bs";
 import { IoSettingsOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import SignOutButton from "@/components/SignOutButton";
 
 interface SidebarProps {
   user: User;
@@ -17,8 +16,24 @@ interface SidebarProps {
 export default function Sidebar({ user }: SidebarProps) {
   const pathname = usePathname();
   const isActiveRoute = (route: string) => pathname === route;
+
+  const getInitials = (name: string) => {
+    // Split the name into words
+    const words = name.split(" ");
+
+    // Initialize an empty string to store initials
+    let initials = "";
+
+    // Loop through each word
+    for (const word of words) {
+      // Get the first character of the word and uppercase it
+      initials += word[0].toUpperCase();
+    }
+
+    return initials;
+  };
   return (
-    <aside className="h-screen w-full max-w-[300px] flex flex-col space-y-5 items-start justify-between bg-white p-7 rounded-l-xl">
+    <aside className="h-full w-full flex flex-col space-y-5 items-start justify-between bg-white p-7 rounded-l-xl">
       <div className="flex flex-col space-y-10 w-full">
         <div className="flex flex-col space-y-4">
           <div className="flex gap-2 items-center">
@@ -30,7 +45,7 @@ export default function Sidebar({ user }: SidebarProps) {
                 height={100}
               />
               <AvatarFallback>
-                {user?.name?.charAt(0).toUpperCase()}
+                {getInitials(user?.name as string)}
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col space-y-1 justify-start">
@@ -78,13 +93,9 @@ export default function Sidebar({ user }: SidebarProps) {
           </Link>
         </div>
       </div>
-      <Button
-        variant="destructive"
-        onClick={() => signOut()}
-        className="w-full"
-      >
-        Sign Out
-      </Button>
+      <div className="w-full">
+        <SignOutButton />
+      </div>
     </aside>
   );
 }

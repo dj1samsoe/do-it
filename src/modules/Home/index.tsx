@@ -6,7 +6,7 @@ import React from "react";
 
 export default function Home() {
   return (
-    <div className="w-full min-h-screen bg-white/10 py-12 text-white">
+    <div className="w-full min-h-screen lg:bg-white/10 py-12 text-white">
       <div className="w-full max-w-[640px] mx-auto">
         <div className="flex flex-col space-y-4 items-start">
           <h1 className="text-3xl font-bold">Today Tasks</h1>
