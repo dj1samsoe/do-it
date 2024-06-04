@@ -33,8 +33,11 @@ export const DeleteTasks = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" className="flex gap-3 items-center">
-          <FaRegTrashAlt />
+        <Button
+          variant="destructive"
+          className="flex gap-3 items-center w-full"
+        >
+          <FaRegTrashAlt size={16} />
           Delete Task
         </Button>
       </DialogTrigger>

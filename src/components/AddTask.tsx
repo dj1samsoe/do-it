@@ -1,6 +1,10 @@
 "use client";
 
-import { IoCalendarClearOutline, IoTimeOutline } from "react-icons/io5";
+import {
+  IoCalendarClearOutline,
+  IoCreateOutline,
+  IoTimeOutline,
+} from "react-icons/io5";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -66,7 +70,7 @@ export default function AddTask() {
       <DialogTrigger asChild className="w-full">
         <Button
           variant="outline"
-          className="flex justify-between items-center py-7"
+          className="flex justify-between items-center py-7 rounded-xl"
         >
           <div className="flex gap-3 items-center">
             <div className="flex gap-1 items-center">
@@ -107,7 +111,12 @@ export default function AddTask() {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={handleSubmit} variant={"default"}>
+          <Button
+            onClick={handleSubmit}
+            variant={"default"}
+            className="flex gap-2 items-center"
+          >
+            <IoCreateOutline size={20} />
             Create Task
           </Button>
         </DialogFooter>

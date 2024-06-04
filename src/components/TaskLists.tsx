@@ -1,7 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { format } from "date-fns";
+import {
+  format,
+  formatDistanceToNow,
+  isPast,
+  isToday,
+  isTomorrow,
+  isYesterday,
+} from "date-fns";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
@@ -21,6 +28,7 @@ import { ToastAction } from "./ui/toast";
 import { Skeleton } from "./ui/skeleton";
 import { HiOutlineEmojiSad } from "react-icons/hi";
 import { DeleteTasks } from "./DeleteTasks";
+import { MdOutlineSaveAlt } from "react-icons/md";
 
 export default function TaskLists() {
   const { toast } = useToast();
@@ -160,6 +168,28 @@ export default function TaskLists() {
     );
   }
 
+  const annotation = (deadline: Date) => {
+    if (deadline) {
+      if (isToday(deadline)) {
+        return <p className="text-yellow-theme">Due Today</p>;
+      } else if (isTomorrow(deadline)) {
+        return <p className="text-green-600">Due Tomorrow</p>;
+      } else if (isPast(deadline)) {
+        return (
+          <p className="text-red-theme">
+            Overdue by {formatDistanceToNow(deadline)}
+          </p>
+        );
+      } else {
+        return (
+          <p className="text-green-600">
+            Due to {formatDistanceToNow(deadline)} from now
+          </p>
+        );
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {tasks.map((task) => (
@@ -168,35 +198,33 @@ export default function TaskLists() {
             <DialogTrigger asChild>
               <Button
                 variant="outline"
-                className="flex justify-between items-center py-7 w-full"
+                className="flex justify-between items-center py-7 w-full rounded-xl"
                 onClick={() => handleEditTask(task)}
               >
                 <div className="flex gap-3 items-center">
                   <div className="p-1.5 rounded-full bg-red-theme"></div>
 
-                  <span
-                    className={`text-gray-500 ${
-                      task.completed ? "line-through" : "" // Add completed class conditionally
-                    }`}
-                  >
-                    {task.title}
-                  </span>
+                  <div className="flex flex-col items-start">
+                    <span
+                      className={`text-gray-500 text-start ${
+                        task.completed ? "line-through" : "" // Add completed class conditionally
+                      }`}
+                    >
+                      {task.title}
+                    </span>
+                    <span className="text-xs italic">
+                      {annotation(task.deadline)}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex gap-7 items-center">
-                  <span
-                    className={`text-gray-500 ${
-                      task.completed ? "line-through" : "" // Add completed class conditionally
-                    }`}
-                  >
-                    {deadlineFormatted(task.deadline)}
-                  </span>
-                  <Input
-                    type="checkbox"
-                    checked={task.completed}
-                    onChange={() => handleTaskCompletionToggle(task.id)}
-                    className="w-5 h-5 accent-purple-700"
-                  />
-                </div>
+
+                <span
+                  className={`pl-3 text-gray-500${
+                    task.completed ? "line-through" : "" // Add completed class conditionally
+                  }`}
+                >
+                  {deadlineFormatted(task.deadline)}
+                </span>
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -224,18 +252,26 @@ export default function TaskLists() {
                   />
                 </div>
               </div>
-              <div>
+              <div className="flex gap-2 items-center justify-end -mt-4 mb-6">
+                <Input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => handleTaskCompletionToggle(task.id)}
+                  className="w-5 h-5 accent-purple-700"
+                />
+                <Label htmlFor="mark-as-completed">Mark as completed</Label>
+              </div>
+              <div className="w-full">
                 <DeleteTasks onDelete={handleDeleteTask} taskId={task.id} />
               </div>
               <DialogFooter>
-                <Button onClick={handleSaveEdit} variant="default">
-                  Save
-                </Button>
                 <Button
-                  onClick={() => setEditedTask(null)}
-                  variant="destructive"
+                  onClick={handleSaveEdit}
+                  variant="default"
+                  className="w-full flex gap-2 items-center"
                 >
-                  Cancel
+                  <MdOutlineSaveAlt size={20} />
+                  Save
                 </Button>
               </DialogFooter>
             </DialogContent>
