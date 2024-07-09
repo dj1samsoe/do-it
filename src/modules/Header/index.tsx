@@ -31,7 +31,7 @@ export default function Header({ user }: HeaderProps) {
     return initials;
   };
   return (
-    <div className="w-full px-5 py-3 flex justify-between items-center bg-white rounded-xl mx-2 sticky">
+    <header className="w-full px-5 py-3 flex justify-between items-center bg-white rounded-xl mx-2 sticky">
       <Link href="/" className="text-3xl font-bold text-purple-primary">
         Do-it
       </Link>
@@ -59,6 +59,6 @@ export default function Header({ user }: HeaderProps) {
           </div>
         </PopoverContent>
       </Popover>
-    </div>
+    </header>
   );
 }

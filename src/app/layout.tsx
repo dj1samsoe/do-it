@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Layouts from "@/components/layouts";
-import { Toaster } from "@/components/ui/toaster";
+import { getUserSession } from "./api/auth/[...nextauth]/options";
+import { cn } from "@/lib/utils";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -16,16 +17,18 @@ export const metadata: Metadata = {
   description: "Do-it is a todo list app that allows you to plan your day.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getUserSession();
+
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={poppins.className}>
-        <Layouts>{children}</Layouts>
-        <Toaster />
+    <html lang="en">
+      <head />
+      <body className={cn("flex", poppins.className)}>
+        <Layouts session={session}>{children}</Layouts>
       </body>
     </html>
   );

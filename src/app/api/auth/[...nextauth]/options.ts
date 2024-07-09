@@ -1,11 +1,21 @@
 import { prisma } from "@/lib/prisma";
+import { AuthenticationError } from "@/utils/error";
+import { getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { unstable_noStore } from "next/cache";
 
 export const options = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
   ],
   pages: {
@@ -17,13 +27,13 @@ export const options = {
         // Check if email is verified and ends with @gmail.com
         if (profile.email_verified && profile.email.endsWith("@gmail.com")) {
           // Check if the user already exists
-          let existingUser = await prisma.user.findUnique({
+          const existingUser = await prisma.user.findUnique({
             where: { email: profile.email },
           });
 
           // If the user does not exist, create a new user
           if (!existingUser) {
-            existingUser = await prisma.user.create({
+            await prisma.user.create({
               data: {
                 id: profile.sub,
                 name: profile.name,
@@ -41,5 +51,17 @@ export const options = {
       return true;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET as string, // Ensure you set a strong secret
+  secret: process.env.NEXTAUTH_SECRET as string,
 };
+
+export async function getUserSession() {
+  unstable_noStore();
+  const session = await getServerSession(options);
+  return session;
+}
+
+export async function checkPermission() {
+  const session = await getUserSession();
+  if (!session) throw new AuthenticationError();
+  return session;
+}

@@ -13,6 +13,13 @@ import {
 
 export default function SignOutButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = () => {
+    setIsLoading(true);
+    signOut();
+    setIsLoading(false);
+  };
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -25,8 +32,8 @@ export default function SignOutButton() {
           <DialogTitle>Are you sure you want to sign out?</DialogTitle>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="default" onClick={() => signOut()}>
-            Yes
+          <Button variant="default" onClick={handleClick} disabled={isLoading}>
+            {isLoading ? "Signing out..." : "Yes"}
           </Button>
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Cancel

@@ -33,7 +33,7 @@ export default function Sidebar({ user }: SidebarProps) {
     return initials;
   };
   return (
-    <aside className="h-full w-full flex flex-col space-y-5 items-start justify-between bg-white p-7 rounded-l-xl">
+    <aside className="h-screen w-full flex flex-col space-y-5 items-start justify-between bg-white p-7 rounded-l-xl z-10">
       <div className="flex flex-col space-y-10 w-full">
         <div className="flex flex-col space-y-4">
           <div className="flex gap-2 items-center">
@@ -59,20 +59,9 @@ export default function Sidebar({ user }: SidebarProps) {
         </div>
         <div className="flex flex-col space-y-4 text-gray-theme">
           <Link
-            href="/"
-            className={
-              isActiveRoute("/")
-                ? `flex w-full gap-2 items-center text-purple-primary font-medium px-4 py-2`
-                : `flex w-full gap-2 items-center text-gray-theme px-4 py-2`
-            }
-          >
-            <GoTasklist size={20} />
-            <span>Today Tasks</span>
-          </Link>
-          <Link
             href="#"
             className={
-              isActiveRoute("/all-tasks")
+              isActiveRoute("/")
                 ? `flex w-full gap-2 items-center text-purple-primary font-medium px-4 py-2`
                 : `flex w-full gap-2 items-center text-gray-theme px-4 py-2`
             }
