@@ -44,9 +44,9 @@ export default function Sidebar({ user }: SidebarProps) {
                 width={100}
                 height={100}
               />
-              <AvatarFallback>
+              {/* <AvatarFallback>
                 {getInitials(user?.name as string)}
-              </AvatarFallback>
+              </AvatarFallback> */}
             </Avatar>
             <div className="flex flex-col space-y-1 justify-start">
               <p className="font-medium text-gray-theme">Do-it</p>

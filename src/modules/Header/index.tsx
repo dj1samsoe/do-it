@@ -44,7 +44,7 @@ export default function Header({ user }: HeaderProps) {
               width={100}
               height={100}
             />
-            <AvatarFallback>{getInitials(user?.name as string)}</AvatarFallback>
+            {/* <AvatarFallback>{getInitials(user?.name as string)}</AvatarFallback> */}
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="w-72 mt-3 mr-2">
