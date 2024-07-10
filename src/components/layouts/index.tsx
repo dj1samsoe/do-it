@@ -18,7 +18,7 @@ export default function Layouts({
   session,
 }: {
   children: React.ReactNode;
-  session?: Session | null;
+  session: Session | null;
 }) {
   const pathname = usePathname();
   return (
