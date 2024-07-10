@@ -48,6 +48,7 @@ export const options = {
 };
 
 export async function getUserSession() {
+  unstable_noStore();
   const session = await getServerSession(options);
   return session;
 }
